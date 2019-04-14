@@ -140,10 +140,10 @@ while True:
                                 else: # not denormalized - "normal" case
                                     exponent = 2**(int("".join(leds[1:9]),2)-127) #2 raised to the power of int of (leds 30 through 23) - 127
                                     mantissa = 1.0 #Invisible leading bit in mantissa does apply
-                                power = -1 #No magic numbers
+                                power = -1 #No magic numbers: used in bit contribution calculation i.e. 2**power
                                 for led in (leds[9:]): #Working with the bits in the mantissa
                                     if "1" == led: #Check which bits in the mantissa are on
-                                        mantissa = 2**power + mantissa #Add the on bits
+                                        mantissa = 2**power + mantissa #If bit is set, add its contribution: bit 23: .5, bit 22: .25, ...
                                     power = power - 1 #Each index in the mantissa has it's own power, going down by 1
                                 value = sign*exponent*mantissa #Combine the sign,exponent and mantissa
 
